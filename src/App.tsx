@@ -16,6 +16,21 @@ function App() {
   const deleteRecipe = (id: number) => {
     setRecipes((prev) => prev.filter((recipe) => recipe.id !== id));
   };
+  
+  const editRecipe = (
+    id: number,
+    name: string,
+    ingredients: string,
+    instructions: string
+  ) => {
+    setRecipes((prev) =>
+      prev.map((recipe) =>
+        recipe.id === id
+          ? { ...recipe, name, ingredients, instructions }
+          : recipe
+      )
+    );
+  };
 
   useEffect(() => {
     localStorage.setItem("recipes", JSON.stringify(recipes));
@@ -30,7 +45,11 @@ function App() {
 
       <h2>Recipes</h2>
 
-      <RecipeList recipes={recipes} deleteRecipe={deleteRecipe} />
+      <RecipeList 
+        recipes={recipes} 
+        deleteRecipe={deleteRecipe} 
+        editRecipe={editRecipe}
+      />
     </div>
   );
 }
